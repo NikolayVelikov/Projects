@@ -7,6 +7,6 @@
         string InformationForOneRow(int row);
         string InformationForSomeRows(int[] rows);
         string InformationForDay(string dayNumber);
-        string Activitis();
+        string Activities();
     }
 }

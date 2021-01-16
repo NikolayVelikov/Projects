@@ -8,29 +8,20 @@ namespace AccountsStorage_Console_App.Functionality.Entities
     {
         private IReader _reader;
 
-
         public ReportFromFile(IReader reader)
         {
             this._reader = reader;
         }
+
         public string AllFile() // Read All in the file
         {
-            return this._reader.Read();
+
+            return string.Join(System.Environment.NewLine,this._reader.Read());
         }
 
-        public string Activitis() // return only section for activities with index row
+        public string Activities() // return only section for activities with index row
         {
-            string[] file = AllFile().Split('|', System.StringSplitOptions.RemoveEmptyEntries).ToArray();
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < file.Length; i++)
-            {
-                string output = file[i];
-                i += 3;
-                output += file[i];
-                sb.AppendLine(output);
-            }
-
-            return sb.ToString().TrimEnd();
+            throw new System.NotImplementedException();
         }
 
         public string InformationForDay(string dayNumber)

@@ -1,7 +1,10 @@
-﻿using AccountsStorage_Console_App.Constants;
+﻿using System;
+using AccountsStorage_Console_App.Constants;
 using AccountsStorage_Console_App.IO.Contracts;
 using AccountsStorage_Console_App.File.Contracts;
 using AccountsStorage_Console_App.Functionality.Contracts;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AccountsStorage_Console_App.Functionality.Entities
 {
@@ -28,17 +31,23 @@ namespace AccountsStorage_Console_App.Functionality.Entities
             string price = information[1];
             string description = information[2];
 
-            string input = _reader.Read();
-            if (input.Length == 0)
+            List<string> input = _reader.Read();
+            string informationForRecording;
+            if (input.Count == 0)
             {
-                input = string.Format(Templates.TemplateForFillingInputsInFile, 1, date, price, description);
+                informationForRecording = string.Format(Templates.TemplateForFillingInputsInFile, 1, date, price, description) + Environment.NewLine;                
             }
             else
             {
-                input += string.Format(Templates.TemplateForFillingInputsInFile, 1, date, price, description);
+                string[] lastRowInformation = input[input.Count - 1].Split("|").ToArray();
+                string value = lastRowInformation[0].Substring(0, lastRowInformation[0].Length - 1);
+                int currentRow = int.Parse(value);
+                string newIformation = string.Format(Templates.TemplateForFillingInputsInFile, currentRow + 1, date, price, description);
+
+                informationForRecording = PreparingInformationForRecording(input,newIformation);
             }
 
-            System.IO.File.WriteAllText(_file.FilePath, input);
+            System.IO.File.WriteAllText(_file.FilePath, informationForRecording);
         }
 
         private string[] FillingInformatonFromTheConsole()
@@ -52,6 +61,17 @@ namespace AccountsStorage_Console_App.Functionality.Entities
             string description = _read.ReadLine();
 
             return new string[] { date, price, description };
+        }
+        private string PreparingInformationForRecording(List<string> input, string information)
+        {
+            string data = string.Empty;
+            foreach (string item in input)
+            {
+                data += item+Environment.NewLine;
+            }
+            data += information + Environment.NewLine;
+
+            return data;
         }
     }
 }

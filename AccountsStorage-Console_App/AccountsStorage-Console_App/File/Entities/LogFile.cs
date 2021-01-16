@@ -9,7 +9,8 @@ namespace AccountsStorage_Console_App.File.Entities
         public LogFile(IPathManager pathManager)
         {
             this._pathManager = pathManager;
-            this._pathManager.EnsureCurrentFileAndFolderExist();
+            this._pathManager.EnsureFolderExist();
+            this._pathManager.EnsureFileExist();
         }
 
         public string FilePath => this._pathManager.CurrentFilePath;

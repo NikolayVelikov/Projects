@@ -4,6 +4,10 @@
     {
         string CurrentFilePath { get; }
         string CurrentDirectoryPath { get; }
-        void EnsureCurrentFileAndFolderExist();
+        string GetCurrentDirectory();        
+        void CreatingFile();
+        void CreatingFolder();
+        void EnsureFolderExist();
+        void EnsureFileExist();
     }
 }

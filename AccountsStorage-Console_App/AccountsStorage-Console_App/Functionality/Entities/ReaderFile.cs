@@ -1,4 +1,7 @@
-﻿using AccountsStorage_Console_App.File.Contracts;
+﻿using System.Linq;
+using System.Collections.Generic;
+
+using AccountsStorage_Console_App.File.Contracts;
 using AccountsStorage_Console_App.Functionality.Contracts;
 
 namespace AccountsStorage_Console_App.Functionality.Entities
@@ -12,9 +15,11 @@ namespace AccountsStorage_Console_App.Functionality.Entities
             this._file = file;
         }
 
-        public string Read()
+        public List<string> Read()
         {
-            return System.IO.File.ReadLines(this._file.FilePath).ToString();
+            List<string> information = System.IO.File.ReadLines(this._file.FilePath).ToString().Split(System.Environment.NewLine,System.StringSplitOptions.RemoveEmptyEntries).ToList();
+
+            return information;
         }
     }
 }
