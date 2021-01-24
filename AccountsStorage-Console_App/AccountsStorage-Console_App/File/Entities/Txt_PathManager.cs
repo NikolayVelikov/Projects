@@ -61,8 +61,8 @@ namespace AccountsStorage_Console_App.File.Entities
             }
         }
         public void EnsureFileExist()
-        {
-            if (!Directory.Exists(this.CurrentFilePath)) // Checking if file exist
+        {            
+            if (!System.IO.File.Exists(this.CurrentFilePath)) // Checking if file exist
             {
                 throw new ArgumentException(ExceptionMessages.FileNotExist);
             }

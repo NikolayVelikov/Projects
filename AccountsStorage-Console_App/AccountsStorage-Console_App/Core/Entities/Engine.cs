@@ -23,7 +23,7 @@ namespace AccountsStorage_Console_App.Core.Entities
         public void Run()
         {
             bool stop = false;
-            while (stop)
+            while (!stop)
             {
                 this._write.WriteLine(OutputMessages.possibleOptions);
                 char selectedValue = char.Parse(this._read.ReadLine());
@@ -32,7 +32,24 @@ namespace AccountsStorage_Console_App.Core.Entities
                     case '1': this._write.WriteLine(CreatingFolder()); stop = true; break;
                     case '2': this._write.WriteLine(CreatingFile()); stop = true; break;
                     case '3': this._write.WriteLine(AddingInformation()); stop = true; break;
-                    case '4':
+                    //case '4':
+                }
+
+                bool @continue = false;
+                while (!@continue)
+                {
+                    this._write.WriteLine(OutputMessages.ContinueOrNot);
+                    string answer = this._read.ReadLine();
+
+                    if (answer.ToLower() == "yes")
+                    {
+                        @continue = true;
+                        stop = false;
+                    }
+                    else if (answer.ToLower() == "no")
+                    {
+                        @continue = false;
+                    }                    
                 }
             }
 
@@ -71,12 +88,12 @@ namespace AccountsStorage_Console_App.Core.Entities
         private string FolderName()
         {
             this._write.WriteLine(OutputMessages.fillingFolderName);
-            return this._read.ReadLine();
+            return this._read.ReadLine().ToUpper();
         }
         private string FileName()
         {
             this._write.WriteLine(OutputMessages.fillingFolderName);
-            return this._read.ReadLine();
+            return this._read.ReadLine().ToLower();
         }
     }
 }

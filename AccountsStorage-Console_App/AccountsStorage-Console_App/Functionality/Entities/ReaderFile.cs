@@ -17,8 +17,8 @@ namespace AccountsStorage_Console_App.Functionality.Entities
 
         public List<string> Read()
         {
-            List<string> information = System.IO.File.ReadLines(this._file.FilePath).ToString().Split(System.Environment.NewLine,System.StringSplitOptions.RemoveEmptyEntries).ToList();
-
+            List<string> information = System.IO.File.ReadAllText(this._file.FilePath).ToString().Split(System.Environment.NewLine,System.StringSplitOptions.RemoveEmptyEntries).ToList();
+           
             return information;
         }
     }

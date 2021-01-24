@@ -8,6 +8,7 @@
 
         public override void Creat()
         {
+            base._pathManager.EnsureFolderExist();
             base._pathManager.CreatingFile();
         }
     }

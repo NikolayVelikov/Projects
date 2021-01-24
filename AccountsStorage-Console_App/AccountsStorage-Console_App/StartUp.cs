@@ -1,9 +1,7 @@
-﻿using System;
-
-using AccountsStorage_Console_App.IO.Entities;
-using AccountsStorage_Console_App.IO.Contracts;
+﻿using AccountsStorage_Console_App.Core.Contracts;
 using AccountsStorage_Console_App.Core.Entities;
-using AccountsStorage_Console_App.Core.Contracts;
+using AccountsStorage_Console_App.IO.Contracts;
+using AccountsStorage_Console_App.IO.Entities;
 
 namespace AccountsStorage_Console_App
 {
