@@ -1,4 +1,5 @@
-﻿using AccountsStorage_Console_App.Core.Contracts;
+﻿using AccountsStorage_Console_App.Constants;
+using AccountsStorage_Console_App.Core.Contracts;
 using AccountsStorage_Console_App.File.Contracts;
 using AccountsStorage_Console_App.File.Entities;
 using AccountsStorage_Console_App.File.Entities.Creating;
@@ -32,7 +33,7 @@ namespace AccountsStorage_Console_App.Core.Entities
                     case '1': this._write.WriteLine(CreatingFolder()); stop = true; break;
                     case '2': this._write.WriteLine(CreatingFile()); stop = true; break;
                     case '3': this._write.WriteLine(AddingInformation()); stop = true; break;
-                    //case '4':
+                    case '4': this._write.WriteLine(Reporting()); stop = true; break;
                 }
 
                 bool @continue = false;
@@ -48,8 +49,8 @@ namespace AccountsStorage_Console_App.Core.Entities
                     }
                     else if (answer.ToLower() == "no")
                     {
-                        @continue = false;
-                    }                    
+                        @continue = true;
+                    }
                 }
             }
 
@@ -85,6 +86,76 @@ namespace AccountsStorage_Console_App.Core.Entities
 
             return OutputMessages.finishedOperations;
         }
+        private string Reporting()
+        {
+            string folderName = FolderName();
+            string fileName = FileName();
+            IPathManager pathmanger = new Txt_PathManager(folderName, fileName);
+            IFile file = new LogFile(pathmanger);
+            IReader reader = new ReaderFile(file);
+            IReport report = new ReportFromFile(reader);
+
+            while (true)
+            {
+                this._write.WriteLine(OutputMessages.possibleForReading);
+                string comand = string.Empty;
+                while (true)
+                {
+                    comand = TransaltingTheComand(this._read.ReadLine());
+                    if (comand == null)
+                    {
+                        return string.Empty;
+                    }
+                    if (comand == "-1")
+                    {
+                        this._write.WriteLine(ExceptionMessages.WrongComand);
+                        continue;
+                    }
+                    break;
+                }
+
+                if (comand == "all")
+                {
+                    this._write.WriteLine(report.AllFile());
+                }
+                else if (comand == "activities")
+                {
+                    this._write.WriteLine(report.Activities());
+                }
+                else if (comand == "day")
+                {
+
+                }
+                else if (comand == "row")
+                {
+
+                }
+                else if (comand == "rows")
+                {
+
+                }
+                else if (comand == "sum")
+                {
+
+                }
+
+                this._write.WriteLine(OutputMessages.ContinueOrNot);
+                while (true)
+                {
+                    string @continue = this._read.ReadLine();
+                    if (@continue.ToLower() == "yes")
+                    {
+                        break;
+                    }
+                    else if (@continue.ToLower() == "no" || @continue == "")
+                    {
+                        return "Finish task 4";
+                    }
+
+                    this._write.WriteLine(ExceptionMessages.WrongComand);
+                }
+            }
+        }
         private string FolderName()
         {
             this._write.WriteLine(OutputMessages.fillingFolderName);
@@ -94,6 +165,21 @@ namespace AccountsStorage_Console_App.Core.Entities
         {
             this._write.WriteLine(OutputMessages.fillingFolderName);
             return this._read.ReadLine().ToLower();
+        }
+        private string TransaltingTheComand(string comand)
+        {
+            comand = comand.TrimEnd();
+            switch (comand)
+            {
+                case "1": return "all";
+                case "2": return "activities";
+                case "3": return "day";
+                case "4": return "row";
+                case "5": return "rows";
+                case "6": return "sum";
+                case "":  return null;
+                default: return "-1";
+            }
         }
     }
 }

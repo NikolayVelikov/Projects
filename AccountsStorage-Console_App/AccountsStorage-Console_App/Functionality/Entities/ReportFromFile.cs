@@ -1,9 +1,14 @@
-﻿using AccountsStorage_Console_App.Functionality.Contracts;
+﻿using AccountsStorage_Console_App.Constants;
+using AccountsStorage_Console_App.Functionality.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace AccountsStorage_Console_App.Functionality.Entities
 {
     public class ReportFromFile : IReport
     {
+        private const string showing = Templates.TemplateForShowing;
         private IReader _reader;
 
         public ReportFromFile(IReader reader)
@@ -13,13 +18,22 @@ namespace AccountsStorage_Console_App.Functionality.Entities
 
         public string AllFile() // Read All in the file
         {
-
-            return string.Join(System.Environment.NewLine,this._reader.Read());
+            string output = string.Join(Environment.NewLine, this._reader.Read());
+            return output;
         }
 
         public string Activities() // return only section for activities with index row
         {
-            throw new System.NotImplementedException();
+            List<string> output = this._reader.Read();
+            StringBuilder sb = new StringBuilder();
+
+            foreach (string row in output)
+            {
+                string[] arrayRow = row.Split('|');
+                sb.AppendLine(arrayRow[0] + "=> " + arrayRow[3]);
+            }
+
+            return sb.ToString().TrimEnd();
         }
 
         public string InformationForDay(string dayNumber)

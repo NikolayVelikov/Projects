@@ -9,6 +9,7 @@
 
         public const string FolderNameAlreadyExist = "Folder Name exist";
         public const string FileNameAlreadyExist = "File Name exist";
-        
+
+        public const string WrongComand = "Wrong comand. Please choose again or press enter for escaping.";
     }
 }
