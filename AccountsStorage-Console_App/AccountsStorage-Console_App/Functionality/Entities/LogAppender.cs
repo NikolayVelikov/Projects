@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+
 using AccountsStorage_Console_App.Constants;
 using AccountsStorage_Console_App.IO.Contracts;
 using AccountsStorage_Console_App.File.Contracts;
 using AccountsStorage_Console_App.Functionality.Contracts;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace AccountsStorage_Console_App.Functionality.Entities
 {
@@ -24,7 +25,7 @@ namespace AccountsStorage_Console_App.Functionality.Entities
         }
 
 
-        public void Write(string text)
+        public void Write()
         {
             string[] information = FillingInformatonFromTheConsole();
             string date = information[0];

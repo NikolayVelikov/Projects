@@ -1,6 +1,4 @@
 ﻿using AccountsStorage_Console_App.Functionality.Contracts;
-using System.Linq;
-using System.Text;
 
 namespace AccountsStorage_Console_App.Functionality.Entities
 {

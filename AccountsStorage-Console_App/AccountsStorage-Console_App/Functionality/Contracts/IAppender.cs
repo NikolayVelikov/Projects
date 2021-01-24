@@ -2,6 +2,6 @@
 {
     public interface IAppender
     {
-        void Write(string text);
+        void Write();
     }
 }

@@ -1,6 +1,11 @@
-﻿using System;
-using AccountsStorage_Console_App.Core.Contracts;
+﻿using AccountsStorage_Console_App.Core.Contracts;
+using AccountsStorage_Console_App.File.Contracts;
+using AccountsStorage_Console_App.File.Entities;
+using AccountsStorage_Console_App.File.Entities.Creating;
+using AccountsStorage_Console_App.Functionality.Contracts;
+using AccountsStorage_Console_App.Functionality.Entities;
 using AccountsStorage_Console_App.IO.Contracts;
+using AccountsStorage_Console_App.Messages;
 
 namespace AccountsStorage_Console_App.Core.Entities
 {
@@ -15,20 +20,63 @@ namespace AccountsStorage_Console_App.Core.Entities
             this._write = write;
         }
 
-        public void Run(string comand)
+        public void Run()
         {
-            if (comand == "newFile")
+            bool stop = false;
+            while (stop)
             {
-
+                this._write.WriteLine(OutputMessages.possibleOptions);
+                char selectedValue = char.Parse(this._read.ReadLine());
+                switch (selectedValue)
+                {
+                    case '1': this._write.WriteLine(CreatingFolder()); stop = true; break;
+                    case '2': this._write.WriteLine(CreatingFile()); stop = true; break;
+                    case '3': this._write.WriteLine(AddingInformation()); stop = true; break;
+                    case '4':
+                }
             }
-            else if (comand == "adding")
-            {
 
-            }
-            else if (comand == "reading")
-            {
+        }
+        private string CreatingFolder()
+        {
+            string folderName = FolderName();
+            ICreate creatingFolder = new CreatFolder(folderName);
+            creatingFolder.Creat();
 
-            }
+            return OutputMessages.finishedOperations;
+        }
+        private string CreatingFile()
+        {
+            string folderName = FolderName();
+            string fileName = FileName();
+            ICreate creatingFile = new CreatFile(folderName, fileName);
+            creatingFile.Creat();
+
+            return OutputMessages.finishedOperations;
+        }
+        private string AddingInformation()
+        {
+            string folderName = FolderName();
+            string fileName = FileName();
+
+            IPathManager pathManager = new Txt_PathManager(folderName, fileName);
+            IFile file = new LogFile(pathManager);
+            IReader reader = new ReaderFile(file);
+            IAppender loging = new LogAppender(this._read, this._write, file, reader);
+
+            loging.Write();
+
+            return OutputMessages.finishedOperations;
+        }
+        private string FolderName()
+        {
+            this._write.WriteLine(OutputMessages.fillingFolderName);
+            return this._read.ReadLine();
+        }
+        private string FileName()
+        {
+            this._write.WriteLine(OutputMessages.fillingFolderName);
+            return this._read.ReadLine();
         }
     }
 }
